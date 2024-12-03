@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./style.css">
+  <title>hfinder web</title>
+</head>
+<body>
+  <div class="container">
+    <h2>hfinder(2023) web ver.</h2>
+    <div class="search-wrap">
+      <select name="ctg" id="ctg">
+        <option value="1">전체</option>
+        <option value="2">OX/XO</option>
+        <option value="3">꽁꽁</option>
+        <option value="4">올라/꼬로록</option>
+        <option value="5">가로세로</option>
+      </select>
+      <input type="text" id="searchInput" placeholder="검색어 입력">
+      <button id="searchBtn">검색</button>
+    </div>
+    <ul class="results"></ul>
+  </div>
+  <script src="./script.js"></script>
+</body>
+</html>
