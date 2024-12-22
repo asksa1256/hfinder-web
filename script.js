@@ -11,11 +11,20 @@ const displayData = (data, searchValue) => {
 
 const fetchData = (src, searchValue) => {
   const cacheKey = `${src}_${searchValue}`;
+  const cacheDuration = 86400 * 1000; // 캐시 유효 기간: 24시간 (밀리초 단위)
 
   // 캐시된 데이터 확인
-  if (apiCache[cacheKey]) {
-    displayData(apiCache[cacheKey], searchValue);
-    return;
+  const cachedData = apiCache[cacheKey]; 
+  if (cachedData) { 
+    const currentTime = new Date().getTime(); 
+    // 캐시 유효 기간 확인 
+    if (currentTime - cachedData.timestamp < cacheDuration) { 
+      displayData(cachedData.data, searchValue); 
+      return; 
+    } else { 
+      // 캐시 만료 시 삭제 
+      delete apiCache[cacheKey]; 
+    } 
   }
 
   // API 호출 및 데이터 처리
@@ -37,9 +46,14 @@ const fetchData = (src, searchValue) => {
     }, []);
 
     // 캐시 저장
-    apiCache[cacheKey] = highlightedResults;
+    apiCache[cacheKey] = { 
+      timestamp: new Date().getTime(), 
+      data: highlightedResults 
+    };
 
     displayData(highlightedResults, searchValue);
+
+    console.log(apiCache)
   });
 }
 
