@@ -10,7 +10,7 @@ const displayData = (data, searchValue) => {
 }
 
 const fetchData = (src, searchValue) => {
-  const cacheKey = `${src}_${searchValue.toLowerCase()}`;
+  const cacheKey = `${src}_${searchValue}`;
 
   // 캐시된 데이터 확인
   if (apiCache[cacheKey]) {
@@ -20,31 +20,32 @@ const fetchData = (src, searchValue) => {
 
   // API 호출 및 데이터 처리
   fetch(src)
-    .then(response => response.text())
-    .then(data => {
-      const lines = data.split('\n');
-      const searchValueLower = searchValue.toLowerCase();
-      const regex = new RegExp(`(${searchValue})`, 'gi');
+  .then(response => response.text())
+  .then(data => {
+    const lines = data.split('\n');
+    const searchValues = searchValue.split(' '); // 검색할 단어들을 공백 기준으로 분리
+    const regex = new RegExp(`(${searchValues.join('|')})`, 'gi'); // 정규 표현식 생성
 
-      const highlightedResults = lines.reduce((result, line) => {
-        const lineLower = line.toLowerCase();
-        if (lineLower.includes(searchValueLower)) {
-          // 필요한 경우에만 replace 호출: 공백 포함된 경우 검색 속도 향상
-          result.push(line.replace(regex, match => `<span style="background-color: yellow; font-weight: bold;">${match}</span>`));
-        }
-        return result;
-      }, []);
-      
-      // 캐시 저장
-      apiCache[cacheKey] = highlightedResults;
+    const highlightedResults = lines.reduce((result, line) => {
+      const allWordsIncluded = searchValues.every(value => line.includes(value)); 
+      if (allWordsIncluded) { // 모든 단어가 포함된 경우 강조 표시 
+        result.push(
+          line.replace(regex, match => `<span style="background-color: yellow; font-weight: bold;">${match}</span>`)
+        ); 
+      }
+      return result;
+    }, []);
 
-      displayData(highlightedResults, searchValue);
-    });
+    // 캐시 저장
+    apiCache[cacheKey] = highlightedResults;
+
+    displayData(highlightedResults, searchValue);
+  });
 }
 
 function search() {
   resultsContainer.classList.add('active')
-  const searchValue = target.value.toLowerCase();
+  const searchValue = target.value;
   if (searchValue.length === 0) {
     resultsContainer.innerHTML = `<p>검색어를 입력해주세요.</p>`;
     return;
