@@ -2,7 +2,8 @@ body {
   margin: 0;
   padding: 0;
 }
-select, button {
+select,
+button {
   font-size: 18px;
   height: 34px;
 }
@@ -25,9 +26,11 @@ h2 {
 p {
   margin: 0;
 }
+
 .container {
   margin: 20px;
 }
+
 .search-wrap {
   display: flex;
   justify-content: center;
@@ -37,6 +40,10 @@ p {
 .search-wrap * + * {
   margin-left: 4px;
 }
+.search-wrap button {
+  flex-shrink: 0;
+}
+
 .results {
   width: 95%;
   max-width: 800px;
@@ -49,6 +56,7 @@ p {
   border: 2px dashed gray;
   border-radius: 10px;
 }
+
 .copy {
   text-align: center;
   font-size: 12px;
@@ -62,6 +70,7 @@ p {
 .tip-ul {
   margin: 0 auto;
   width: 50%;
+  min-width: 400px;
   font-size: 14px;
   text-align: center;
 }
@@ -70,7 +79,7 @@ p {
   color: #999;
 }
 .tip-ul li:before {
-  content: '- ';
+  content: "- ";
 }
 .tip-ul li + li {
   margin-top: 4px;
@@ -79,5 +88,16 @@ p {
 @media (max-width: 800px) {
   .results {
     max-width: 90%;
+  }
+}
+
+@media (max-width: 420px) {
+  .tip-ul {
+    min-width: initial;
+    width: 90%;
+  }
+
+  .search-wrap {
+    display: block;
   }
 }

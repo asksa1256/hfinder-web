@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./style.css">
-  <title>hfinder web</title>
-</head>
-<body>
-  <div class="container">
-    <h2>hfinder(2023) web ver.</h2>
-    <div class="search-wrap">
-      <select name="ctg" id="ctg">
-        <option value="1">전체</option>
-        <option value="2">OX/XO</option>
-        <option value="3">꽁꽁</option>
-        <option value="4">올라/꼬로록</option>
-        <option value="5">가로세로</option>
-      </select>
-      <input type="text" id="searchInput" placeholder="검색어 입력">
-      <button id="searchBtn">검색</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>hfinder web</title>
+  </head>
+  <body>
+    <div class="container">
+      <h2>hfinder(2023) web</h2>
+      <div class="search-wrap">
+        <select name="ctg" id="ctg">
+          <option value="1">전체</option>
+          <option value="2">OX/XO</option>
+          <option value="3">꽁꽁</option>
+          <option value="4">올라/꼬로록</option>
+          <option value="5">가로세로</option>
+        </select>
+        <input type="text" id="searchInput" placeholder="검색어 입력" />
+        <button id="searchBtn">검색</button>
+      </div>
+      <ul class="tip-ul">
+        <li>
+          문장 내 특정 단어들을 띄어쓰기로 구분해서 검색할 수 있습니다. (ex:
+          1897 대원군 중건)
+        </li>
+        <li>대소문자는 구분해서 검색해주세요.</li>
+      </ul>
+      <ul class="results"></ul>
     </div>
-    <ul class="tip-ul">
-      <li>문장 내 특정 단어들을 띄어쓰기로 구분해서 검색할 수 있습니다. (ex: 1897 대원군 중건)</li>
-      <li>대소문자는 구분해서 검색해주세요.</li>
-    </ul>
-    <ul class="results"></ul>
-  </div>
-  <script src="./script.js"></script>
-</body>
+    <script src="./script.js"></script>
+  </body>
 </html>
