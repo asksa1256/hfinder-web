@@ -1,13 +1,37 @@
+@font-face {
+  font-family: "Pretendard";
+  src: url(./fonts/Pretendard-Regular.woff) format("woff");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Pretendard";
+  src: url(./fonts/Pretendard-Bold.woff) format("woff");
+  font-weight: 700;
+}
+@font-face {
+  font-family: "DungGeunMo";
+  src: url(./fonts/DungGeunMo.woff) format("woff");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "parkdahyun";
+  src: url(./fonts/parkdahyun.ttf);
+  font-weight: 400;
+}
+
 body {
   margin: 0;
   padding: 0;
+  font-family: "Pretendard", sans-serif;
 }
 select,
 button {
+  font-family: "Pretendard", sans-serif;
   font-size: 18px;
   height: 34px;
 }
 input {
+  font-family: "Pretendard", sans-serif;
   font-size: 18px;
   height: 28px;
 }
@@ -27,8 +51,40 @@ p {
   margin: 0;
 }
 
+/* 폰트 변경 */
+html[data-font="2"] body,
+html[data-font="2"] input,
+html[data-font="2"] select,
+html[data-font="2"] button,
+#fontSelect option[value="2"] {
+  font-family: "DungGeunMo", sans-serif;
+}
+html[data-font="3"] body,
+html[data-font="3"] input,
+html[data-font="3"] select,
+html[data-font="3"] button,
+#fontSelect option[value="3"] {
+  font-family: "parkdahyun", sans-serif;
+  font-size: larger;
+}
+
+#fontSelect {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 14px;
+  border: 0;
+}
+
+/* 메인 */
 .container {
   margin: 20px;
+}
+
+.header {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .search-wrap {
