@@ -97,19 +97,75 @@ document.addEventListener("keydown", (event) => {
 
 /* 폰트 변경 */
 const fontSelect = document.querySelector("#fontSelect");
+const html = document.querySelector('html');
 
 fontSelect.addEventListener("change", (e) => {
   let selectedNum = e.target.value;
-  document.querySelector("html").setAttribute("data-font", selectedNum);
+
+  if (selectedNum === '1') {
+    localStorage.removeItem("font");
+  } else {
+    localStorage.setItem("font", selectedNum);
+  }
+
+  html.setAttribute("data-font", selectedNum);
 });
 
 /* 테마 변경 */
 const themeSelect = document.querySelector("#themeSelect");
+const body = document.querySelector("body");
 
 themeSelect.addEventListener("change", (e) => {
   let selectedTheme = e.target.value;
-  document.querySelector("body").setAttribute("data-theme", selectedTheme);
+  body.setAttribute("data-theme", selectedTheme);
+
+  if (selectedTheme === 'default') {
+    localStorage.removeItem("theme");
+  } else {
+    localStorage.setItem("theme", selectedTheme);
+  }
+
+  body.setAttribute("data-theme", selectedTheme);
 });
 
 /* 눈내림 효과 */
 const sf = new Snowflakes();
+sf.hide();
+const sfChk = document.querySelector('#snowflakes');
+sfChk.addEventListener('click', e => {
+  if (e.target.checked === true) {
+    sf.show();
+    localStorage.setItem('snow', true);
+  } else {
+    sf.hide();
+    localStorage.setItem('snow', false);
+  }
+})
+
+/* 폰트, 테마 등 사용자 변경사항 로드 */
+let themeIdx;
+
+window.addEventListener('DOMContentLoaded', () => {
+  const savedFontNum = localStorage.getItem("font");
+  if (savedFontNum !== null) {
+    html.setAttribute("data-font", savedFontNum);
+    fontSelect.selectedIndex = savedFontNum*1-1;
+  } 
+
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme !== null) {
+    body.setAttribute("data-theme", savedTheme);
+    themeIdx = savedTheme.substring(savedTheme.length-1);
+    themeSelect.selectedIndex = themeIdx*1;
+  }
+
+  const savedSnow = localStorage.getItem("snow");
+  if (savedSnow !== null && savedSnow) {
+    sfChk.checked = true;
+    sf.show();
+  } else {
+    sfChk.checked = false;
+    sf.hide();
+  }
+})
+
