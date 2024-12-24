@@ -158,8 +158,8 @@ html[data-font="3"] .checkbox-wrap label {
 
 .options {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 4px;
+  right: 10px;
 }
 .opt {
   font-size: 14px;
@@ -189,7 +189,7 @@ html[data-font="3"] .checkbox-wrap label {
 .header {
   position: relative;
   max-width: 600px;
-  margin: 0 auto;
+  margin: 60px auto 0;
 }
 
 .search-wrap {
