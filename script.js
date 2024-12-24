@@ -1,93 +1,90 @@
 /* 검색 */
 const target = document.getElementById("searchInput");
+const ctg = document.getElementById("ctg");
 const resultsContainer = document.querySelector(".results");
 
-const apiCache = {}; // API 결과를 캐싱할 전역 객체
+let oxData = [];
+let ollaData = [];
+let kkongData = [];
+let garoData = [];
 
-const displayData = (data, searchValue) => {
-  resultsContainer.innerHTML =
-    data.length === 0
-      ? `<p>데이터가 없습니다.</p>`
-      : data.map((item) => `<li>${item}</li>`).join("");
-};
+const fetchData = (selectedOption) => {
+  const src =
+    selectedOption === "1"
+      ? "./data/ox_utf8.txt"
+      : selectedOption === "2"
+      ? "./data/olla_utf8.txt"
+      : selectedOption === "3"
+      ? "./data/kkong_utf8.txt"
+      : "./data/garo_utf8.txt";
 
-const fetchData = (src, searchValue) => {
-  const cacheKey = `${src}_${searchValue}`;
-  const cacheDuration = 86400 * 1000; // 캐시 유효 기간: 24시간 (밀리초 단위)
+  if (src.includes("ox") && oxData.length > 0) return;
+  if (src.includes("olla") && ollaData.length > 0) return;
+  if (src.includes("kkong") && kkongData.length > 0) return;
+  if (src.includes("garo") && garoData.length > 0) return;
 
-  // 캐시된 데이터 확인
-  const cachedData = apiCache[cacheKey];
-  if (cachedData) {
-    const currentTime = new Date().getTime();
-    // 캐시 유효 기간 확인
-    if (currentTime - cachedData.timestamp < cacheDuration) {
-      displayData(cachedData.data, searchValue);
-      return;
-    } else {
-      // 캐시 만료 시 삭제
-      delete apiCache[cacheKey];
-    }
-  }
-
-  // API 호출 및 데이터 처리
   fetch(src)
     .then((response) => response.text())
     .then((data) => {
-      const lines = data.split("\n");
-      const searchValues = searchValue.split(" "); // 검색할 단어들을 공백 기준으로 분리
-      const regex = new RegExp(`(${searchValues.join("|")})`, "gi"); // 정규 표현식 생성
-
-      const highlightedResults = lines.reduce((result, line) => {
-        const allWordsIncluded = searchValues.every((value) =>
-          line.includes(value)
-        );
-        if (allWordsIncluded) {
-          // 모든 단어가 포함된 경우 강조 표시
-          result.push(
-            line.replace(
-              regex,
-              (match) =>
-                `<span class="emp">${match}</span>`
-            )
-          );
-        }
-        return result;
-      }, []);
-
-      // 캐시 저장
-      apiCache[cacheKey] = {
-        timestamp: new Date().getTime(),
-        data: highlightedResults,
-      };
-
-      displayData(highlightedResults, searchValue);
+      if (src.includes("ox")) oxData = data.split("\n");
+      if (src.includes("olla")) ollaData = data.split("\n");
+      if (src.includes("kkong")) kkongData = data.split("\n");
+      if (src.includes("garo")) garoData = data.split("\n");
     });
 };
 
+ctg.addEventListener("change", (e) => {
+  fetchData(e.target.value);
+});
+
+const displayData = (results, searchValue) => {
+  resultsContainer.innerHTML =
+    results.length === 0
+      ? `<p>데이터가 없습니다.</p>`
+      : results.map((item) => `<li>${item}</li>`).join("");
+};
+
+function searchInData(searchValue, selectedOption) {
+  const searchValues = searchValue.split(" ");
+  const regex = new RegExp(`(${searchValues.join("|")})`, "gi");
+  const dataLines =
+    selectedOption === "1"
+      ? oxData
+      : selectedOption === "2"
+      ? ollaData
+      : selectedOption === "3"
+      ? kkongData
+      : garoData;
+
+  const highlightedResults = dataLines.reduce((result, line) => {
+    const allWordsIncluded = searchValues.every((value) =>
+      line.includes(value)
+    );
+    if (allWordsIncluded) {
+      result.push(
+        line.replace(regex, (match) => `<span class="emp">${match}</span>`)
+      );
+    }
+    return result;
+  }, []);
+
+  displayData(highlightedResults, searchValue);
+}
+
 function search() {
-  resultsContainer.classList.add("active");
+  const selectedOption =
+    document.getElementById("ctg").selectedOptions[0].value;
   const searchValue = target.value;
+
+  resultsContainer.classList.add("active");
+
   if (searchValue.length === 0) {
     resultsContainer.innerHTML = `<p>검색어를 입력해주세요.</p>`;
     return;
   }
 
-  const selectedOption =
-    document.getElementById("ctg").selectedOptions[0].value;
-
-  const src =
-    selectedOption === "1"
-      ? "./data/all_utf8.txt"
-      : selectedOption === "2"
-      ? "./data/ox_utf8.txt"
-      : selectedOption === "3"
-      ? "./data/kkong_utf8.txt"
-      : selectedOption === "4"
-      ? "./data/olla_utf8.txt"
-      : "./data/garo_utf8.txt";
-
-  // api 호출
-  fetchData(src, searchValue);
+  // 단어 검색
+  searchInData(searchValue, selectedOption);
 }
 
 document.querySelector("#searchBtn").addEventListener("click", () => search());
@@ -97,12 +94,12 @@ document.addEventListener("keydown", (event) => {
 
 /* 폰트 변경 */
 const fontSelect = document.querySelector("#fontSelect");
-const html = document.querySelector('html');
+const html = document.querySelector("html");
 
 fontSelect.addEventListener("change", (e) => {
   let selectedNum = e.target.value;
 
-  if (selectedNum === '1') {
+  if (selectedNum === "1") {
     localStorage.removeItem("font");
   } else {
     localStorage.setItem("font", selectedNum);
@@ -119,7 +116,7 @@ themeSelect.addEventListener("change", (e) => {
   let selectedTheme = e.target.value;
   body.setAttribute("data-theme", selectedTheme);
 
-  if (selectedTheme === 'default') {
+  if (selectedTheme === "default") {
     localStorage.removeItem("theme");
   } else {
     localStorage.setItem("theme", selectedTheme);
@@ -131,32 +128,32 @@ themeSelect.addEventListener("change", (e) => {
 /* 눈내림 효과 */
 const sf = new Snowflakes();
 sf.hide();
-const sfChk = document.querySelector('#snowflakes');
-sfChk.addEventListener('click', e => {
+const sfChk = document.querySelector("#snowflakes");
+sfChk.addEventListener("click", (e) => {
   if (e.target.checked === true) {
     sf.show();
-    localStorage.setItem('snow', true);
+    localStorage.setItem("snow", true);
   } else {
     sf.hide();
-    localStorage.setItem('snow', false);
+    localStorage.setItem("snow", false);
   }
-})
+});
 
 /* 폰트, 테마 등 사용자 변경사항 로드 */
 let themeIdx;
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener("DOMContentLoaded", () => {
   const savedFontNum = localStorage.getItem("font");
   if (savedFontNum !== null) {
     html.setAttribute("data-font", savedFontNum);
-    fontSelect.selectedIndex = savedFontNum*1-1;
-  } 
+    fontSelect.selectedIndex = savedFontNum * 1 - 1;
+  }
 
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme !== null) {
     body.setAttribute("data-theme", savedTheme);
-    themeIdx = savedTheme.substring(savedTheme.length-1);
-    themeSelect.selectedIndex = themeIdx*1;
+    themeIdx = savedTheme.substring(savedTheme.length - 1);
+    themeSelect.selectedIndex = themeIdx * 1;
   }
 
   const savedSnow = localStorage.getItem("snow");
@@ -167,5 +164,4 @@ window.addEventListener('DOMContentLoaded', () => {
     sfChk.checked = false;
     sf.hide();
   }
-})
-
+});
