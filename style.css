@@ -155,6 +155,10 @@ html[data-font="3"] .input-container input:valid ~ label{
 html[data-font="3"] .checkbox-wrap label {
   font-size: 18px;
 }
+html[data-font="3"] .results {
+  line-height: 1.25;
+  font-size: 20px;
+}
 
 .options {
   position: absolute;
