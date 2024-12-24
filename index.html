@@ -6,14 +6,21 @@
     <link rel="stylesheet" href="./style.css" />
     <title>hfinder-web</title>
   </head>
-  <body>
+  <body data-theme="default">
     <div class="container">
-      <header class="header">
-        <select name="fontSelect" id="fontSelect">
+      <div class="options">
+        <select class="opt" name="fontSelect" id="fontSelect">
           <option value="1">기본폰트</option>
           <option value="2">둥근모</option>
           <option value="3">고양이체</option>
         </select>
+        <select class="opt" name="themeSelect" id="themeSelect">
+          <option value="default">기본테마</option>
+          <option value="xmas1">크리스마스1</option>
+          <option value="xmas2">크리스마스2</option>
+        </select>
+      </div>
+      <header class="header">
         <h2>hfinder(2023)_web</h2>
       </header>
       <div class="search-wrap">
@@ -36,6 +43,7 @@
       </ul>
       <ul class="results"></ul>
     </div>
+    <script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>
     <script src="./script.js"></script>
   </body>
 </html>

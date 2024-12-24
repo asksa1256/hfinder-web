@@ -47,7 +47,7 @@ const fetchData = (src, searchValue) => {
             line.replace(
               regex,
               (match) =>
-                `<span style="background-color: yellow; font-weight: bold;">${match}</span>`
+                `<span class="emp">${match}</span>`
             )
           );
         }
@@ -97,9 +97,19 @@ document.addEventListener("keydown", (event) => {
 
 /* 폰트 변경 */
 const fontSelect = document.querySelector("#fontSelect");
-// const result = document.querySelector(".result");
 
 fontSelect.addEventListener("change", (e) => {
   let selectedNum = e.target.value;
   document.querySelector("html").setAttribute("data-font", selectedNum);
 });
+
+/* 테마 변경 */
+const themeSelect = document.querySelector("#themeSelect");
+
+themeSelect.addEventListener("change", (e) => {
+  let selectedTheme = e.target.value;
+  document.querySelector("body").setAttribute("data-theme", selectedTheme);
+});
+
+/* 눈내림 효과 */
+const sf = new Snowflakes();
