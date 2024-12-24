@@ -29,14 +29,81 @@ body {
 select,
 button {
   font-family: "Pretendard", sans-serif;
-  font-size: 18px;
-  height: 34px;
+  font-size: 16px;
+  border: 0;
 }
 input {
   font-family: "Pretendard", sans-serif;
   font-size: 18px;
-  height: 28px;
 }
+
+
+/* CSS */
+.button-38 {
+  background-color: #FFFFFF;
+  border: 0;
+  border-radius: .5rem;
+  box-sizing: border-box;
+  color: #111827;
+  font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 14px;
+  font-weight: 700;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none #D1D5DB solid;
+  text-decoration-thickness: auto;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+.button-38:hover {
+  background-color: rgb(249,250,251);
+}
+.button-38:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+.button-38:focus-visible {
+  box-shadow: none;
+}
+
+.input-container{
+	position:relative;
+}
+.input-container label{
+	position:absolute;
+	top:6px;
+	left:0px;
+	font-size:16px;
+	color:#888;	
+  pointer-events:none;
+	transition: all 0.2s ease-in-out;
+}
+.input-container input{ 
+  border:0;
+  border-bottom:1px solid #555;  
+  background:transparent;
+  min-width: 240px;
+  padding:8px 0 5px 0;
+  font-size:18px;
+  color:#000;
+}
+.input-container input:focus{ 
+ border:none;	
+ outline:none;
+ background: transparent;
+ border-bottom:2px solid #e74c3c;	
+}
+.input-container input:focus ~ label,
+.input-container input:valid ~ label{
+	top:-12px;
+  left: -4px;
+	font-size:12px;
+  color: #e74c3c;
+}
+
 ul {
   padding: 0;
 }
@@ -64,7 +131,11 @@ html[data-font="3"] select,
 html[data-font="3"] button,
 #fontSelect option[value="3"] {
   font-family: "parkdahyun", sans-serif;
-  font-size: larger;
+  font-size: 22px;
+}
+html[data-font="3"] .options .opt,
+html[data-font="3"] .tip-ul {
+  font-size: 18px;
 }
 
 .options {
@@ -103,6 +174,11 @@ html[data-font="3"] button,
   flex-shrink: 0;
 }
 
+#ctg {
+  margin: 4px 8px 0 0;
+  font-size: 14px;
+}
+
 .results {
   position: relative;
   width: 95%;
@@ -126,6 +202,9 @@ html[data-font="3"] button,
   background: yellow;
   color: #000;
   font-weight: 700;
+}
+.results p {
+  padding: 20px;
 }
 
 .copy {
@@ -165,6 +244,9 @@ body[data-theme='xmas1'] {
 }
 body[data-theme='xmas2'] {
   background: url(./xmas-bg2.jpg);
+}
+body[data-theme='xmas3'] {
+  background: url(./xmas-bg3.jpg);
 }
 body[data-theme^='xmas']:before {
   content: '';

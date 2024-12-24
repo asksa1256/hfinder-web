@@ -18,6 +18,7 @@
           <option value="default">기본테마</option>
           <option value="xmas1">크리스마스1</option>
           <option value="xmas2">크리스마스2</option>
+          <option value="xmas3">크리스마스3</option>
         </select>
       </div>
       <header class="header">
@@ -31,12 +32,15 @@
           <option value="4">올라/꼬로록</option>
           <option value="5">가로세로</option>
         </select>
-        <input type="text" id="searchInput" placeholder="검색어 입력" />
-        <button id="searchBtn">검색</button>
+        <div class="input-container">
+          <input type="text" id="searchInput" required autocomplete="false"/>
+          <label>검색어</label>		
+        </div>
+        <button id="searchBtn" class="button-38">검색</button>
       </div>
       <ul class="tip-ul">
         <li>
-          문장 내 특정 단어들을 띄어쓰기로 구분해서 검색할 수 있습니다. (ex:
+          문장 내 단어들을 띄어쓰기로 구분해서 검색할 수 있습니다. (ex:
           1897 대원군 중건)
         </li>
         <li>대소문자는 구분해서 검색해주세요.</li>
