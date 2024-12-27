@@ -165,3 +165,15 @@ window.addEventListener("DOMContentLoaded", () => {
     sf.hide();
   }
 });
+
+/* 입력창 비우기 */
+const inputClearBtn = document.querySelector('#inputClearBtn');
+inputClearBtn.addEventListener('click', () => {
+  target.value = '';
+})
+
+target.addEventListener('change', () => {
+  (target.value.length > 0) 
+  ? inputClearBtn.style.display = 'block' 
+  : inputClearBtn.style.display = 'none';
+})

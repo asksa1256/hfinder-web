@@ -71,6 +71,21 @@ input {
   box-shadow: none;
 }
 
+#inputClearBtn {
+  position: absolute;
+  right: 0;
+  top: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(220, 219, 219, 0.5);
+  cursor: pointer;
+  display: none;
+}
+#inputClearBtn img {
+  width: 100%;
+}
+
 .input-container {
   position: relative;
 }
@@ -87,8 +102,8 @@ input {
   border: 0;
   border-bottom: 1px solid #555;
   background: transparent;
-  min-width: 240px;
-  padding: 8px 0 5px 0;
+  min-width: 210px;
+  padding: 8px 30px 4px 0;
   font-size: 18px;
   color: #000;
 }
