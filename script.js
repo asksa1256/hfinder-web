@@ -170,6 +170,7 @@ window.addEventListener("DOMContentLoaded", () => {
 const inputClearBtn = document.querySelector('#inputClearBtn');
 inputClearBtn.addEventListener('click', () => {
   target.value = '';
+  target.focus();
 })
 
 target.addEventListener('change', () => {
