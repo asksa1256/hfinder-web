@@ -37,6 +37,10 @@ input {
   font-family: "Pretendard", sans-serif;
   font-size: 18px;
 }
+a {
+  text-decoration: none;
+  color: inherit;
+}
 
 /* CSS */
 .button {
@@ -180,6 +184,9 @@ html[data-font="3"] .results {
   position: absolute;
   top: 4px;
   right: 10px;
+}
+.options > * + * {
+  margin-left: 8px;
 }
 .opt {
   font-size: 14px;
