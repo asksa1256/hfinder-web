@@ -168,7 +168,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
 /* 입력창 비우기 */
 const inputClearBtn = document.querySelector('#inputClearBtn');
-inputClearBtn.addEventListener('click', () => {
+
+function addMultipleEventListener(element, events, handler) {
+  events.forEach(e => element.addEventListener(e, handler))
+}
+
+addMultipleEventListener(inputClearBtn, ['click', 'focus'], () => {
   target.value = '';
   target.focus();
 })
