@@ -244,6 +244,7 @@ html[data-font="3"] .results {
   width: 400px;
   padding: 40px 30px 30px;
   background: #fff;
+  color: #000;
   border-radius: 20px;
   box-shadow: 0 3px 15px rgba(0, 0, 0, 0.35);
   z-index: 9;
