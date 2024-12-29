@@ -309,6 +309,9 @@ html[data-font="3"] .results {
   position: relative;
   padding: 20px;
 }
+.results .answer {
+  color: red;
+}
 
 .tip-ul {
   margin: 0 auto;

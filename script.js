@@ -11,11 +11,11 @@ const closeBtn = document.querySelector(".close-btn");
 const inputClearBtn = document.querySelector("#inputClearBtn");
 const hanjaBtns = document.querySelectorAll(".hanjabtn");
 const sfChk = document.querySelector("#snowflakes");
+let oxData = new Set();
+let ollaData = new Set();
+let kkongData = new Set();
+let garoData = new Set();
 let themeIdx;
-let oxData = [];
-let ollaData = [];
-let kkongData = [];
-let garoData = [];
 
 const fetchData = (selectedOption) => {
   const src =
@@ -35,10 +35,38 @@ const fetchData = (selectedOption) => {
   fetch(src)
     .then((response) => response.text())
     .then((data) => {
-      if (src.includes("ox")) oxData = data.split("\n");
-      if (src.includes("olla")) ollaData = data.split("\n");
-      if (src.includes("kkong")) kkongData = data.split("\n");
-      if (src.includes("garo")) garoData = data.split("\n");
+      splitData = data.split("\n");
+
+      if (src.includes("ox")) {
+        splitData.forEach((data) => {
+          const [question, answer] = data.split("(").map((item) => item.trim());
+          oxData.add({ question, answer: "(" + answer });
+        });
+      }
+      if (src.includes("olla")) {
+        splitData.forEach((data) => {
+          const [question, answer] = data.split("?").map((item) => item.trim());
+          ollaData.add({ question: question + "?", answer });
+        });
+      }
+      if (src.includes("kkong")) {
+        splitData.forEach((data) => {
+          const regex = /([^?]+\?[^.?]+|[^.]+\.[^.?]+)$/; // 문장의 마지막 글자가 .이거나 ?일 때
+          const match = data.match(regex);
+          if (match) {
+            const [question, answer] = match[0]
+              .split(/(?<=[?.])/)
+              .map((item) => item.trim());
+            kkongData.add({ question, answer });
+          }
+        });
+      }
+      if (src.includes("garo")) {
+        splitData.forEach((data) => {
+          const [question, answer] = data.split("(").map((item) => item.trim());
+          garoData.add({ question, answer: "(" + answer });
+        });
+      }
     });
 };
 
@@ -46,17 +74,23 @@ ctg.addEventListener("change", (e) => {
   fetchData(e.target.value);
 });
 
-const displayData = (results, searchValue) => {
+const displayData = (results) => {
   resultsContainer.innerHTML =
     results.length === 0
       ? `<p>데이터가 없습니다.</p>`
-      : results.map((item) => `<li>${item}</li>`).join("");
+      : results
+          .map(
+            (item) =>
+              `<li>${item.question} <span class='answer'>${item.answer}</span></li>`
+          )
+          .join("");
 };
 
+// 결과 검색 함수
 function searchInData(searchValue, selectedOption) {
   const searchValues = searchValue.split(" ");
   const regex = new RegExp(`(${searchValues.join("|")})`, "gi");
-  const dataLines =
+  const dataSet =
     selectedOption === "1"
       ? oxData
       : selectedOption === "2"
@@ -65,19 +99,26 @@ function searchInData(searchValue, selectedOption) {
       ? kkongData
       : garoData;
 
-  const highlightedResults = dataLines.reduce((result, line) => {
-    const allWordsIncluded = searchValues.every((value) =>
-      line.includes(value)
-    );
-    if (allWordsIncluded) {
-      result.push(
-        line.replace(regex, (match) => `<span class="emp">${match}</span>`)
-      );
-    }
-    return result;
-  }, []);
+  // 검색 결과 리턴
+  const searchQuestions = (searchValue) => {
+    const results = [];
+    const searchValues = searchValue.split(" ");
 
-  displayData(highlightedResults, searchValue);
+    dataSet.forEach((item) => {
+      if (searchValues.every((value) => item.question.includes(value))) {
+        // 질문에 검색어 하이라이트 처리
+        const highlightedQuestion = item.question.replace(
+          regex,
+          (match) => `<span class="emp">${match}</span>`
+        );
+        results.push({ question: highlightedQuestion, answer: item.answer });
+      }
+    });
+    return results;
+  };
+
+  // 검색 결과 표시
+  displayData(searchQuestions(searchValue));
 }
 
 function search() {
@@ -92,7 +133,7 @@ function search() {
     return;
   }
 
-  // 단어 검색
+  // 결과 검색 함수에 검색어, 게임 종류 전달
   searchInData(searchValue, selectedOption);
 }
 
@@ -100,6 +141,11 @@ function search() {
 target.addEventListener("input", () => {
   search();
 });
+
+// 입력 후 엔터 시 검색
+// document.addEventListener("keydown", (event) => {
+//   if (event.key === "Enter") search();
+// });
 
 /* 폰트 변경 */
 fontSelect.addEventListener("change", (e) => {
