@@ -49,10 +49,8 @@ a {
   border-radius: 8px;
   box-sizing: border-box;
   color: #111827;
-  font-family: "Inter var", ui-sans-serif, system-ui, -apple-system, system-ui,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 14px;
+  font-family: sans-serif;
   font-weight: 700;
   padding: 8px 16px;
   text-align: center;
@@ -383,14 +381,14 @@ body[data-theme^="xmas"] .results p {
 }
 
 body[data-theme="xmas1"] {
-  background: url(./xmas-bg1.jpg);
+  background: url(./img/xmas-bg1.jpg);
 }
 body[data-theme="xmas1"]:before {
   background: rgba(0, 0, 0, 0.5);
 }
 
 body[data-theme="xmas2"] {
-  background: url(./xmas-bg2.jpg);
+  background: url(./img/xmas-bg2.jpg);
 }
 body[data-theme="xmas2"]:before {
   background: rgba(0, 0, 0, 0.5);
@@ -400,7 +398,7 @@ body[data-theme="xmas2"] .results:before {
 }
 
 body[data-theme="xmas3"] {
-  background: url(./xmas-bg3.jpg);
+  background: url(./img/xmas-bg3.jpg);
 }
 
 @media (max-width: 800px) {
