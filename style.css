@@ -84,7 +84,6 @@ a {
   border-radius: 50%;
   background: rgba(220, 219, 219, 0.5);
   cursor: pointer;
-  display: none;
 }
 #inputClearBtn img {
   width: 100%;

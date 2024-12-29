@@ -33,20 +33,19 @@
       </header>
       <div class="search-wrap">
         <select name="ctg" id="ctg">
-          <option value="0" disabled>선택</option>
+          <option value="0" disabled selected>게임선택</option>
           <option value="1">OX/XO</option>
           <option value="2">올라/꼬로록</option>
           <option value="3">꽁꽁</option>
           <option value="4">가로세로</option>
         </select>
         <div class="input-container">
-          <input type="text" id="searchInput" required autocomplete="false" />
-          <label>검색어</label>
+          <input type="text" id="searchInput" oninput="search()" required autocomplete="false" />
+          <label>검색어 입력</label>
           <button id="inputClearBtn" type="button">
             <img src="./img/x.png" alt="모두 지우기">
           </button>
         </div>
-        <button id="searchBtn" class="button">검색</button>
       </div>
       <ul class="tip-ul">
         <li>

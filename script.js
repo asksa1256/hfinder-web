@@ -46,6 +46,7 @@ const displayData = (results, searchValue) => {
 
 function searchInData(searchValue, selectedOption) {
   const searchValues = searchValue.split(" ");
+  console.log(searchValue);
   const regex = new RegExp(`(${searchValues.join("|")})`, "gi");
   const dataLines =
     selectedOption === "1"
@@ -86,11 +87,6 @@ function search() {
   // 단어 검색
   searchInData(searchValue, selectedOption);
 }
-
-document.querySelector("#searchBtn").addEventListener("click", () => search());
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") search();
-});
 
 /* 폰트 변경 */
 const fontSelect = document.querySelector("#fontSelect");
@@ -176,10 +172,4 @@ function addMultipleEventListener(element, events, handler) {
 addMultipleEventListener(inputClearBtn, ['click', 'focus'], () => {
   target.value = '';
   target.focus();
-})
-
-target.addEventListener('change', () => {
-  (target.value.length > 0) 
-  ? inputClearBtn.style.display = 'block' 
-  : inputClearBtn.style.display = 'none';
 })
