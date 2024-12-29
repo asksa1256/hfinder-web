@@ -1,8 +1,17 @@
 /* 검색 */
-const target = document.getElementById("searchInput");
+const html = document.querySelector("html");
+const body = document.querySelector("body");
+const fontSelect = document.querySelector("#fontSelect");
+const themeSelect = document.querySelector("#themeSelect");
 const ctg = document.getElementById("ctg");
+const target = document.getElementById("searchInput");
 const resultsContainer = document.querySelector(".results");
-
+const openModalBtn = document.querySelector(".open-modal-btn");
+const closeBtn = document.querySelector(".close-btn");
+const inputClearBtn = document.querySelector("#inputClearBtn");
+const hanjaBtns = document.querySelectorAll(".hanjabtn");
+const sfChk = document.querySelector("#snowflakes");
+let themeIdx;
 let oxData = [];
 let ollaData = [];
 let kkongData = [];
@@ -72,7 +81,8 @@ function searchInData(searchValue, selectedOption) {
 }
 
 function search() {
-  const selectedOption = document.getElementById("ctg").selectedOptions[0].value;
+  const selectedOption =
+    document.getElementById("ctg").selectedOptions[0].value;
   const searchValue = target.value.trimStart();
 
   resultsContainer.classList.add("active");
@@ -92,9 +102,6 @@ target.addEventListener("input", () => {
 });
 
 /* 폰트 변경 */
-const fontSelect = document.querySelector("#fontSelect");
-const html = document.querySelector("html");
-
 fontSelect.addEventListener("change", (e) => {
   let selectedNum = e.target.value;
 
@@ -108,9 +115,6 @@ fontSelect.addEventListener("change", (e) => {
 });
 
 /* 테마 변경 */
-const themeSelect = document.querySelector("#themeSelect");
-const body = document.querySelector("body");
-
 themeSelect.addEventListener("change", (e) => {
   let selectedTheme = e.target.value;
   body.setAttribute("data-theme", selectedTheme);
@@ -127,7 +131,7 @@ themeSelect.addEventListener("change", (e) => {
 /* 눈내림 효과 */
 const sf = new Snowflakes();
 sf.hide();
-const sfChk = document.querySelector("#snowflakes");
+
 sfChk.addEventListener("click", (e) => {
   if (e.target.checked === true) {
     sf.show();
@@ -139,8 +143,6 @@ sfChk.addEventListener("click", (e) => {
 });
 
 /* 폰트, 테마 등 사용자 변경사항 로드 */
-let themeIdx;
-
 window.addEventListener("DOMContentLoaded", () => {
   const savedFontNum = localStorage.getItem("font");
   if (savedFontNum !== null) {
@@ -166,36 +168,22 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 /* 입력창 비우기 */
-const inputClearBtn = document.querySelector('#inputClearBtn');
-
 function addMultipleEventListener(element, events, handler) {
-  events.forEach(e => element.addEventListener(e, handler))
+  events.forEach((e) => element.addEventListener(e, handler));
 }
 
-addMultipleEventListener(inputClearBtn, ['click', 'focus'], () => {
-  target.value = '';
+addMultipleEventListener(inputClearBtn, ["click", "focus"], () => {
+  target.value = "";
   target.focus();
-})
-
-/* 특수문자 지원 */
-const quickmenu = document.querySelector('.quickmenu');
-const quickmenuBtns = document.querySelectorAll('.quickmenu .quickbtn');
-const hanjaBtns = document.querySelectorAll('.hanjabtn');
-quickmenuBtns.forEach(btn => {
-  btn.addEventListener('click', e => {
-    target.value += e.target.textContent;
-  })
-})
+});
 
 /* 모달 */
-const openModalBtn = document.querySelector('.open-modal-btn');
-const closeBtn = document.querySelector('.close-btn');
-openModalBtn.addEventListener('click', function() {
-  const targetModalName = this.getAttribute('data-target');
+openModalBtn.addEventListener("click", function () {
+  const targetModalName = this.getAttribute("data-target");
   const targetModal = document.querySelector(`#${targetModalName}`);
-  targetModal.style.display = 'block';
-})
-closeBtn.addEventListener('click', function() {
+  targetModal.style.display = "block";
+});
+closeBtn.addEventListener("click", function () {
   const targetModal = this.parentNode;
-  targetModal.style.display = 'none';
-})
+  targetModal.style.display = "none";
+});
