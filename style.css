@@ -218,6 +218,47 @@ html[data-font="3"] .results {
   margin: 60px auto 0;
 }
 
+.quickmenu {
+  text-align: center;
+}
+.quickmenu .wrap {
+  position: relative;
+  display: inline-block;
+}
+.quickmenu .wrap + .wrap {
+  margin-left: 16px;
+}
+.quickmenu h5 {
+  display: inline-block;
+  margin-right: 8px;
+}
+.quickmenu button + button {
+  margin-left: 4px;
+}
+
+.modal {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  padding: 40px 30px 30px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.35);
+  z-index: 9;
+  line-height: 1.6;
+  word-break: keep-all;
+  text-align: left;
+  display: none;
+}
+.modal .close-btn {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  cursor: pointer;
+}
+
 .search-wrap {
   display: flex;
   justify-content: center;
@@ -375,5 +416,10 @@ body[data-theme="xmas3"] {
 
   .search-wrap {
     display: block;
+  }
+
+  .modal {
+    width: 70%;
+    font-size: 15px;
   }
 }

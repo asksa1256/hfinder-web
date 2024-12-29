@@ -46,7 +46,6 @@ const displayData = (results, searchValue) => {
 
 function searchInData(searchValue, selectedOption) {
   const searchValues = searchValue.split(" ");
-  console.log(searchValue);
   const regex = new RegExp(`(${searchValues.join("|")})`, "gi");
   const dataLines =
     selectedOption === "1"
@@ -171,4 +170,27 @@ function addMultipleEventListener(element, events, handler) {
 addMultipleEventListener(inputClearBtn, ['click', 'focus'], () => {
   target.value = '';
   target.focus();
+})
+
+/* 빠른 입력 */
+const quickmenu = document.querySelector('.quickmenu');
+const quickmenuBtns = document.querySelectorAll('.quickmenu .quickbtn');
+const hanjaBtns = document.querySelectorAll('.hanjabtn');
+quickmenuBtns.forEach(btn => {
+  btn.addEventListener('click', e => {
+    target.value += e.target.textContent;
+  })
+})
+
+/* 모달 */
+const openModalBtn = document.querySelector('.open-modal-btn');
+const closeBtn = document.querySelector('.close-btn');
+openModalBtn.addEventListener('click', function() {
+  const targetModalName = this.getAttribute('data-target');
+  const targetModal = document.querySelector(`#${targetModalName}`);
+  targetModal.style.display = 'block';
+})
+closeBtn.addEventListener('click', function() {
+  const targetModal = this.parentNode;
+  targetModal.style.display = 'none';
 })
