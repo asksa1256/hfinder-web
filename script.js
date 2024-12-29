@@ -86,6 +86,11 @@ function search() {
   searchInData(searchValue, selectedOption);
 }
 
+// 입력할 때마다 검색
+target.addEventListener("input", () => {
+  search();
+});
+
 /* 폰트 변경 */
 const fontSelect = document.querySelector("#fontSelect");
 const html = document.querySelector("html");
@@ -172,7 +177,7 @@ addMultipleEventListener(inputClearBtn, ['click', 'focus'], () => {
   target.focus();
 })
 
-/* 빠른 입력 */
+/* 특수문자 지원 */
 const quickmenu = document.querySelector('.quickmenu');
 const quickmenuBtns = document.querySelectorAll('.quickmenu .quickbtn');
 const hanjaBtns = document.querySelectorAll('.hanjabtn');
