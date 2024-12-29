@@ -73,9 +73,8 @@ function searchInData(searchValue, selectedOption) {
 }
 
 function search() {
-  const selectedOption =
-    document.getElementById("ctg").selectedOptions[0].value;
-  const searchValue = target.value;
+  const selectedOption = document.getElementById("ctg").selectedOptions[0].value;
+  const searchValue = target.value.trimStart();
 
   resultsContainer.classList.add("active");
 
