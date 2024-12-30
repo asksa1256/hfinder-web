@@ -10,8 +10,6 @@ const openModalBtn = document.querySelector(".open-modal-btn");
 const closeBtn = document.querySelector(".close-btn");
 const inputClearBtn = document.querySelector("#inputClearBtn");
 const hanjaBtns = document.querySelectorAll(".hanjabtn");
-const tipToggleBtn = document.querySelector("#tipToggleBtn");
-const tipUl = document.querySelector(".tip-ul");
 const sfChk = document.querySelector("#snowflakes");
 let oxData = new Set();
 let ollaData = new Set();
@@ -234,15 +232,4 @@ openModalBtn.addEventListener("click", function () {
 closeBtn.addEventListener("click", function () {
   const targetModal = this.parentNode;
   targetModal.style.display = "none";
-});
-
-/* 팁 토글 */
-tipToggleBtn.addEventListener("click", function () {
-  if (tipUl.classList.contains("off")) {
-    tipUl.classList.remove("off");
-    this.textContent = "팁 닫기";
-  } else {
-    tipUl.classList.add("off");
-    this.textContent = "팁 열기";
-  }
 });
