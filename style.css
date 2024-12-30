@@ -303,14 +303,11 @@ html[data-font="3"] .results {
 .results .emp {
   background: yellow;
   color: #000;
+  font-weight: 700;
 }
 .results p {
   position: relative;
   padding: 20px;
-}
-.results .answer {
-  color: red;
-  font-weight: 700;
 }
 
 .tip-ul {
