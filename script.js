@@ -96,9 +96,9 @@ function search() {
   searchInData(searchValue, selectedOption);
 }
 
-// 입력할 때마다 검색
-target.addEventListener("input", () => {
-  search();
+// 엔터 검색
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") search();
 });
 
 /* 폰트 변경 */
@@ -130,7 +130,6 @@ themeSelect.addEventListener("change", (e) => {
 
 /* 눈내림 효과 */
 const sf = new Snowflakes();
-sf.hide();
 
 sfChk.addEventListener("click", (e) => {
   if (e.target.checked === true) {
@@ -175,15 +174,4 @@ function addMultipleEventListener(element, events, handler) {
 addMultipleEventListener(inputClearBtn, ["click", "focus"], () => {
   target.value = "";
   target.focus();
-});
-
-/* 모달 */
-openModalBtn.addEventListener("click", function () {
-  const targetModalName = this.getAttribute("data-target");
-  const targetModal = document.querySelector(`#${targetModalName}`);
-  targetModal.style.display = "block";
-});
-closeBtn.addEventListener("click", function () {
-  const targetModal = this.parentNode;
-  targetModal.style.display = "none";
 });

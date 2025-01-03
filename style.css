@@ -214,7 +214,7 @@ html[data-font="3"] .results {
 .header {
   position: relative;
   max-width: 600px;
-  margin: 60px auto 0;
+  margin: 60px auto 30px;
 }
 
 .quickmenu {
