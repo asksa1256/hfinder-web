@@ -46,7 +46,7 @@ ctg.addEventListener("change", (e) => {
   fetchData(e.target.value);
 });
 
-const displayData = (results, searchValue) => {
+const displayData = results => {
   resultsContainer.innerHTML =
     results.length === 0
       ? `<p>데이터가 없습니다.</p>`
@@ -96,10 +96,16 @@ function search() {
   searchInData(searchValue, selectedOption);
 }
 
-// 엔터 검색
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") search();
-});
+// 입력 시 300ms 이후 검색
+function debounce(func, wait) {
+  let timeout;
+  return function() {
+    clearTimeout(timeout);
+    timeout = setTimeout(func, wait);
+  };
+}
+
+target.addEventListener("input", debounce(search, 300));
 
 /* 폰트 변경 */
 fontSelect.addEventListener("change", (e) => {
