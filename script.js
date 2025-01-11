@@ -9,7 +9,6 @@ const resultsContainer = document.querySelector(".results");
 const openModalBtn = document.querySelector(".open-modal-btn");
 const closeBtn = document.querySelector(".close-btn");
 const inputClearBtn = document.querySelector("#inputClearBtn");
-const hanjaBtns = document.querySelectorAll(".hanjabtn");
 const sfChk = document.querySelector("#snowflakes");
 let themeIdx;
 let oxData = [];
@@ -46,12 +45,26 @@ ctg.addEventListener("change", (e) => {
   fetchData(e.target.value);
 });
 
-const displayData = results => {
+const displayData = (results) => {
   resultsContainer.innerHTML =
     results.length === 0
       ? `<p>데이터가 없습니다.</p>`
       : results.map((item) => `<li>${item}</li>`).join("");
 };
+
+function highlightedResults(dataLines, regex, searchValues) {
+  return dataLines.reduce((result, line) => {
+    const allWordsIncluded = searchValues.every((value) =>
+      line.includes(value)
+    );
+    if (allWordsIncluded) {
+      result.push(
+        line.replace(regex, (match) => `<span class="emp">${match}</span>`)
+      );
+    }
+    return result;
+  }, []);
+}
 
 function searchInData(searchValue, selectedOption) {
   const searchValues = searchValue.split(" ");
@@ -65,19 +78,7 @@ function searchInData(searchValue, selectedOption) {
       ? kkongData
       : garoData;
 
-  const highlightedResults = dataLines.reduce((result, line) => {
-    const allWordsIncluded = searchValues.every((value) =>
-      line.includes(value)
-    );
-    if (allWordsIncluded) {
-      result.push(
-        line.replace(regex, (match) => `<span class="emp">${match}</span>`)
-      );
-    }
-    return result;
-  }, []);
-
-  displayData(highlightedResults, searchValue);
+  displayData(highlightedResults(dataLines, regex, searchValues));
 }
 
 function search() {
@@ -99,7 +100,7 @@ function search() {
 // 입력 시 300ms 이후 검색
 function debounce(func, wait) {
   let timeout;
-  return function() {
+  return function () {
     clearTimeout(timeout);
     timeout = setTimeout(func, wait);
   };
