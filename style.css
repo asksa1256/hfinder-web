@@ -301,13 +301,16 @@ html[data-font="3"] .results {
   margin-top: -16px;
 }
 .results .emp {
-  background: yellow;
+  background: #6fe6b4;
   color: #000;
-  font-weight: 700;
 }
 .results p {
   position: relative;
   padding: 20px;
+}
+.results .answer {
+  color: red;
+  font-weight: 700;
 }
 
 .tip-ul {

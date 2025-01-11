@@ -11,10 +11,14 @@ const closeBtn = document.querySelector(".close-btn");
 const inputClearBtn = document.querySelector("#inputClearBtn");
 const sfChk = document.querySelector("#snowflakes");
 let themeIdx;
-let oxData = [];
-let ollaData = [];
-let kkongData = [];
-let garoData = [];
+// let oxData = [];
+// let ollaData = [];
+// let kkongData = [];
+// let garoData = [];
+let oxData = new Set();
+let ollaData = new Set();
+let kkongData = new Set();
+let garoData = new Set();
 
 const fetchData = (selectedOption) => {
   const src =
@@ -34,10 +38,55 @@ const fetchData = (selectedOption) => {
   fetch(src)
     .then((response) => response.text())
     .then((data) => {
-      if (src.includes("ox")) oxData = data.split("\n");
-      if (src.includes("olla")) ollaData = data.split("\n");
-      if (src.includes("kkong")) kkongData = data.split("\n");
-      if (src.includes("garo")) garoData = data.split("\n");
+      splitData = data.split("\n");
+
+      if (src.includes("ox")) {
+        splitData.forEach((line) => {
+          const lastQstringIndex = line.lastIndexOf("(");
+          const [question, answer] = [
+            line.substring(0, lastQstringIndex + 1).trim(),
+            line.substring(lastQstringIndex + 1).trim(),
+          ];
+          oxData.add({ question, answer });
+        });
+      }
+
+      if (src.includes("olla")) {
+        splitData.forEach((line) => {
+          const lastQstringIndex = line.lastIndexOf("?");
+          const [question, answer] = [
+            line.substring(0, lastQstringIndex + 1).trim(),
+            line.substring(lastQstringIndex + 1).trim(),
+          ];
+          ollaData.add({ question: question, answer });
+        });
+      }
+
+      if (src.includes("kkong")) {
+        splitData.forEach((line) => {
+          const lastQstringIndex = line.lastIndexOf(" ");
+          const [question, answer] = [
+            line.substring(0, lastQstringIndex + 1).trim(),
+            line.substring(lastQstringIndex + 1).trim(),
+          ];
+          kkongData.add({ question, answer });
+        });
+      }
+
+      if (src.includes("garo")) {
+        splitData.forEach((line) => {
+          const lastQstringIndex = line.lastIndexOf("(");
+          const [question, answer] = [
+            line.substring(0, lastQstringIndex + 1).trim(),
+            line.substring(lastQstringIndex + 1).trim(),
+          ];
+          garoData.add({ question, answer });
+        });
+      }
+      // if (src.includes("ox")) oxData = data.split("\n");
+      // if (src.includes("olla")) ollaData = data.split("\n");
+      // if (src.includes("kkong")) kkongData = data.split("\n");
+      // if (src.includes("garo")) garoData = data.split("\n");
     });
 };
 
@@ -45,11 +94,23 @@ ctg.addEventListener("change", (e) => {
   fetchData(e.target.value);
 });
 
+// const displayData = (results) => {
+//   resultsContainer.innerHTML =
+//     results.length === 0
+//       ? `<p>데이터가 없습니다.</p>`
+//       : results.map((item) => `<li>${item}</li>`).join("");
+// };
 const displayData = (results) => {
+  console.log(results);
   resultsContainer.innerHTML =
     results.length === 0
       ? `<p>데이터가 없습니다.</p>`
-      : results.map((item) => `<li>${item}</li>`).join("");
+      : results
+          .map(
+            (item) =>
+              `<li>${item.question} <span class='answer'>${item.answer}</span></li>`
+          )
+          .join("");
 };
 
 function highlightedResults(dataLines, regex, searchValues) {
@@ -78,7 +139,25 @@ function searchInData(searchValue, selectedOption) {
       ? kkongData
       : garoData;
 
-  displayData(highlightedResults(dataLines, regex, searchValues));
+  // 검색 결과 리턴
+  const searchQuestions = (searchValue) => {
+    const results = [];
+    const searchValues = searchValue.split(" ");
+    dataLines.forEach((item) => {
+      if (searchValues.every((value) => item.question.includes(value))) {
+        // 질문에 검색어 하이라이트 처리
+        const highlightedQuestion = item.question.replace(
+          regex,
+          (match) => `<span class="emp">${match}</span>`
+        );
+        results.push({ question: highlightedQuestion, answer: item.answer });
+      }
+    });
+    return results;
+  };
+
+  // displayData(highlightedResults(dataLines, regex, searchValues));
+  displayData(searchQuestions(searchValue));
 }
 
 function search() {
