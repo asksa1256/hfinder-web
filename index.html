@@ -20,12 +20,16 @@
           <option value="xmas2">크리스마스2</option>
           <option value="xmas3">크리스마스3</option>
         </select>
-        <div class="checkbox-wrap">
+        <!-- <div class="checkbox-wrap">
           <label for="snowflakes">눈 내리기</label>
-          <input type="checkbox" name="snowflakes" id="snowflakes" checked="false" />
-        </div>
+          <input type="checkbox" name="snowflakes" id="snowflakes" />
+        </div> -->
+        <button class="button toggle-btn" id="snowflakesBtn">눈 내리기</button>
         <button class="button">
-          <a href="mailto:didi1129@naver.com?subject=새문제 제보&body=[카테고리(오엑/올라꼬로록/꽁꽁/가로세로)]:%0D%0A[문제]:%0D%0A[답]:%0D%0A캡처 첨부를 권장합니다.">새문제 제보</a>
+          <a
+            href="mailto:didi1129@naver.com?subject=문제 제보&body=[카테고리(오엑/올라꼬로록/꽁꽁/가로세로)]:%0D%0A[문제]:%0D%0A[답]:%0D%0A캡처 첨부를 권장합니다."
+            >문제 제보</a
+          >
         </button>
       </div>
       <header class="header">
@@ -43,7 +47,7 @@
           <input type="text" id="searchInput" required autocomplete="false" />
           <label>검색어 입력</label>
           <button id="inputClearBtn" type="button">
-            <img src="./img/x.png" alt="모두 지우기">
+            <img src="./img/x.png" alt="모두 지우기" />
           </button>
         </div>
       </div>

@@ -42,7 +42,7 @@ a {
   color: inherit;
 }
 
-/* CSS */
+/* button */
 .button {
   background-color: #ffffff;
   border: 0;
@@ -73,6 +73,12 @@ a {
   box-shadow: none;
 }
 
+.toggle-btn.active {
+  background: #2074f3;
+  color: #fff;
+}
+
+/* input */
 #inputClearBtn {
   position: absolute;
   right: 0;
@@ -203,6 +209,11 @@ html[data-font="3"] .results {
   vertical-align: -2px;
   cursor: pointer;
   margin: 0;
+}
+
+/* 눈 내리기 */
+.snowflakes.hide {
+  display: none;
 }
 
 /* 메인 */

@@ -9,7 +9,8 @@ const resultsContainer = document.querySelector(".results");
 const openModalBtn = document.querySelector(".open-modal-btn");
 const closeBtn = document.querySelector(".close-btn");
 const inputClearBtn = document.querySelector("#inputClearBtn");
-const sfChk = document.querySelector("#snowflakes");
+// const sfChk = document.querySelector("#snowflakes");
+const sfBtn = document.querySelector("#snowflakesBtn");
 let themeIdx;
 // let oxData = [];
 // let ollaData = [];
@@ -40,7 +41,7 @@ const fetchData = (selectedOption) => {
     .then((data) => {
       splitData = data.split("\n");
 
-      if (src.includes("ox")) {
+      if (src.includes("ox") || src.includes("garo")) {
         splitData.forEach((line) => {
           const lastQstringIndex = line.lastIndexOf("(");
           const [question, answer] = [
@@ -73,16 +74,6 @@ const fetchData = (selectedOption) => {
         });
       }
 
-      if (src.includes("garo")) {
-        splitData.forEach((line) => {
-          const lastQstringIndex = line.lastIndexOf("(");
-          const [question, answer] = [
-            line.substring(0, lastQstringIndex + 1).trim(),
-            line.substring(lastQstringIndex + 1).trim(),
-          ];
-          garoData.add({ question, answer });
-        });
-      }
       // if (src.includes("ox")) oxData = data.split("\n");
       // if (src.includes("olla")) ollaData = data.split("\n");
       // if (src.includes("kkong")) kkongData = data.split("\n");
@@ -214,16 +205,19 @@ themeSelect.addEventListener("change", (e) => {
   body.setAttribute("data-theme", selectedTheme);
 });
 
-/* 눈내림 효과 */
+/* 눈 내리기 */
 const sf = new Snowflakes();
+const sfBody = document.querySelector(".snowflakes");
+sfBody.classList.add("hide");
 
-sfChk.addEventListener("click", (e) => {
-  if (e.target.checked === true) {
-    sf.show();
-    localStorage.setItem("snow", true);
+sfBtn.addEventListener("click", (e) => {
+  const isActived = e.target.classList.contains("active");
+  if (!isActived) {
+    e.target.classList.add("active");
+    sfBody.classList.remove("hide");
   } else {
-    sf.hide();
-    localStorage.setItem("snow", false);
+    e.target.classList.remove("active");
+    sfBody.classList.add("hide");
   }
 });
 
@@ -244,11 +238,11 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const savedSnow = localStorage.getItem("snow");
   if (savedSnow !== null && savedSnow) {
-    sfChk.checked = true;
-    sf.show();
+    sfBtn.target.classList.add("active");
+    sfBody.classList.remove("hide");
   } else {
-    sfChk.checked = false;
-    sf.hide();
+    sfBtn.target.classList.remove("active");
+    sfBody.classList.add("hide");
   }
 });
 
