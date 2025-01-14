@@ -307,6 +307,7 @@ html[data-font="3"] .results {
 .results li {
   position: relative;
   padding: 20px;
+  cursor: pointer;
 }
 .results li + li {
   margin-top: -16px;

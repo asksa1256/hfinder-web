@@ -10,6 +10,7 @@ const openModalBtn = document.querySelector(".open-modal-btn");
 const closeBtn = document.querySelector(".close-btn");
 const inputClearBtn = document.querySelector("#inputClearBtn");
 const sfBtn = document.querySelector("#snowflakesBtn");
+const results = document.querySelector(".results");
 let themeIdx;
 let oxData = new Set();
 let ollaData = new Set();
@@ -106,7 +107,6 @@ ctg.addEventListener("change", (e) => {
 });
 
 const displayData = (results) => {
-  console.log(results);
   resultsContainer.innerHTML =
     results.length === 0
       ? `<p>데이터가 없습니다.</p>`
@@ -181,6 +181,21 @@ function debounce(func, wait) {
 
 target.addEventListener("input", debounce(search, 300));
 
+/* 클릭 시 답 복사 */
+results.addEventListener("click", (e) => {
+  let copyAnswer;
+  if (e.target && e.target.nodeName === "LI") {
+    copyAnswer = e.target
+      .querySelector(".answer")
+      .textContent.replace(/[()]/g, "")
+      .trim();
+  }
+  if (e.target && e.target.nodeName === "SPAN") {
+    copyAnswer = e.target.textContent.replace(/[()]/g, "").trim();
+  }
+  navigator.clipboard.writeText(copyAnswer);
+});
+
 /* 폰트 변경 */
 fontSelect.addEventListener("change", (e) => {
   let selectedNum = e.target.value;
@@ -241,10 +256,10 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const savedSnow = localStorage.getItem("snow");
   if (savedSnow !== null && savedSnow) {
-    sfBtn.target.classList.add("active");
+    sfBtn.classList.add("active");
     sfBody.classList.remove("hide");
   } else {
-    sfBtn.target.classList.remove("active");
+    sfBtn.classList.remove("active");
     sfBody.classList.add("hide");
   }
 });
