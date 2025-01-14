@@ -9,13 +9,8 @@ const resultsContainer = document.querySelector(".results");
 const openModalBtn = document.querySelector(".open-modal-btn");
 const closeBtn = document.querySelector(".close-btn");
 const inputClearBtn = document.querySelector("#inputClearBtn");
-// const sfChk = document.querySelector("#snowflakes");
 const sfBtn = document.querySelector("#snowflakesBtn");
 let themeIdx;
-// let oxData = [];
-// let ollaData = [];
-// let kkongData = [];
-// let garoData = [];
 let oxData = new Set();
 let ollaData = new Set();
 let kkongData = new Set();
@@ -73,11 +68,6 @@ const fetchData = (selectedOption) => {
           kkongData.add({ question, answer });
         });
       }
-
-      // if (src.includes("ox")) oxData = data.split("\n");
-      // if (src.includes("olla")) ollaData = data.split("\n");
-      // if (src.includes("kkong")) kkongData = data.split("\n");
-      // if (src.includes("garo")) garoData = data.split("\n");
     });
 };
 
@@ -85,14 +75,7 @@ ctg.addEventListener("change", (e) => {
   fetchData(e.target.value);
 });
 
-// const displayData = (results) => {
-//   resultsContainer.innerHTML =
-//     results.length === 0
-//       ? `<p>데이터가 없습니다.</p>`
-//       : results.map((item) => `<li>${item}</li>`).join("");
-// };
 const displayData = (results) => {
-  console.log(results);
   resultsContainer.innerHTML =
     results.length === 0
       ? `<p>데이터가 없습니다.</p>`
@@ -104,18 +87,12 @@ const displayData = (results) => {
           .join("");
 };
 
-function highlightedResults(dataLines, regex, searchValues) {
-  return dataLines.reduce((result, line) => {
-    const allWordsIncluded = searchValues.every((value) =>
-      line.includes(value)
-    );
-    if (allWordsIncluded) {
-      result.push(
-        line.replace(regex, (match) => `<span class="emp">${match}</span>`)
-      );
-    }
-    return result;
-  }, []);
+function highlightQuestion(item, regex) {
+  const highlightedQuestion = item.question.replace(
+    regex,
+    (match) => `<span class="emp">${match}</span>`
+  );
+  return { question: highlightedQuestion, answer: item.answer };
 }
 
 function searchInData(searchValue, selectedOption) {
@@ -134,20 +111,15 @@ function searchInData(searchValue, selectedOption) {
   const searchQuestions = (searchValue) => {
     const results = [];
     const searchValues = searchValue.split(" ");
+
     dataLines.forEach((item) => {
       if (searchValues.every((value) => item.question.includes(value))) {
-        // 질문에 검색어 하이라이트 처리
-        const highlightedQuestion = item.question.replace(
-          regex,
-          (match) => `<span class="emp">${match}</span>`
-        );
-        results.push({ question: highlightedQuestion, answer: item.answer });
+        results.push(highlightQuestion(item, regex));
       }
     });
     return results;
   };
 
-  // displayData(highlightedResults(dataLines, regex, searchValues));
   displayData(searchQuestions(searchValue));
 }
 
