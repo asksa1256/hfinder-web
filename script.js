@@ -68,10 +68,19 @@ const fetchData = (selectedOption) => {
 
 const splitLine = (line, delimiter, includeDelimiter) => {
   const lastIndex = line.lastIndexOf(delimiter);
-  return [
-    line.substring(0, lastIndex + (includeDelimiter ? 1 : 0)).trim(),
-    line.substring(lastIndex + (includeDelimiter ? 1 : 0)).trim(),
-  ];
+  let question = line
+    .substring(0, lastIndex + (includeDelimiter ? 1 : 0))
+    .trim();
+  let answer = line.substring(lastIndex + (includeDelimiter ? 1 : 0)).trim();
+
+  if (answer.indexOf(" ", 2) > 0) {
+    answer = answer.split(" ")[0];
+    if (answer.includes("(")) {
+      answer = answer.replace("(", "");
+    }
+  }
+
+  return [question, answer.trim()];
 };
 
 function processLine(line, gameData) {
