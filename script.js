@@ -60,22 +60,44 @@ const fetchData = (selectedOption) => {
 
       if (src.includes("kkong")) {
         splitData.forEach((line) => {
-          const lastQstringIndex = line.lastIndexOf(" ");
-          const [question, answer] = [
-            line.substring(0, lastQstringIndex + 1).trim(),
-            line.substring(lastQstringIndex + 1).trim(),
-          ];
-          kkongData.add({ question, answer });
+          processLine(line, kkongData);
         });
       }
     });
 };
+
+const splitLine = (line, delimiter, includeDelimiter) => {
+  const lastIndex = line.lastIndexOf(delimiter);
+  return [
+    line.substring(0, lastIndex + (includeDelimiter ? 1 : 0)).trim(),
+    line.substring(lastIndex + (includeDelimiter ? 1 : 0)).trim(),
+  ];
+};
+
+function processLine(line, gameData) {
+  let delimiter;
+  let includeDelimiter = true;
+
+  if (line.indexOf("?") > 0) {
+    delimiter = "?";
+  } else if (line.indexOf("(") > 0) {
+    delimiter = "(";
+    includeDelimiter = false;
+  } else if (line.indexOf(".") > 0) {
+    delimiter = ".";
+  } else {
+    delimiter = " ";
+  }
+  const [question, answer] = splitLine(line, delimiter, includeDelimiter);
+  gameData.add({ question, answer });
+}
 
 ctg.addEventListener("change", (e) => {
   fetchData(e.target.value);
 });
 
 const displayData = (results) => {
+  console.log(results);
   resultsContainer.innerHTML =
     results.length === 0
       ? `<p>데이터가 없습니다.</p>`
