@@ -126,7 +126,44 @@ function highlightQuestion(item, regex) {
   return { question: highlightedQuestion, answer: item.answer };
 }
 
+const makeChosung = (str) => {
+  const chosung = [
+    "ㄱ",
+    "ㄲ",
+    "ㄴ",
+    "ㄷ",
+    "ㄸ",
+    "ㄹ",
+    "ㅁ",
+    "ㅂ",
+    "ㅃ",
+    "ㅅ",
+    "ㅆ",
+    "ㅇ",
+    "ㅈ",
+    "ㅉ",
+    "ㅊ",
+    "ㅋ",
+    "ㅌ",
+    "ㅍ",
+    "ㅎ",
+  ];
+  const baseCode = 44032;
+  const chosungChar = [];
+  for (let char of str) {
+    const code = char.charCodeAt(0) - baseCode;
+    if (code < 0) {
+      chosungChar.push(char);
+      continue;
+    }
+    const chosungIndex = Math.floor(code / 588);
+    chosungChar.push(chosung[chosungIndex]);
+  }
+  return chosungChar.join("");
+};
+
 function searchInData(searchValue, selectedOption) {
+  const searchChosung = makeChosung(searchValue);
   const searchValues = searchValue.split(" ");
   const regex = new RegExp(`(${searchValues.join("|")})`, "gi");
   const dataLines =
@@ -140,15 +177,23 @@ function searchInData(searchValue, selectedOption) {
 
   // 검색 결과 리턴
   const searchQuestions = (searchValue) => {
-    const results = [];
+    const wordResults = [];
+    const chosungResults = [];
+    const searchChosung = makeChosung(searchValue);
     const searchValues = searchValue.split(" ");
 
     dataLines.forEach((item) => {
+      const questionChosung = makeChosung(item.question);
+      const highlightedQuestion = highlightQuestion(item, regex);
       if (searchValues.every((value) => item.question.includes(value))) {
-        results.push(highlightQuestion(item, regex));
+        wordResults.push(highlightedQuestion);
+      } else if (questionChosung.includes(searchChosung)) {
+        chosungResults.push(highlightedQuestion);
       }
     });
-    return results;
+
+    // 단어 검색 결과를 먼저, 초성 검색 결과를 나중에
+    return [...wordResults, ...chosungResults];
   };
 
   displayData(searchQuestions(searchValue));
